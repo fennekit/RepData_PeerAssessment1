@@ -73,7 +73,7 @@ stepsPerDay <- activity %>%
 
 
 hist(x=stepsPerDay$totalsteps, breaks = 10, xlab="Total steps per day. ", 
-        main = "Historgram of total steps per day")
+        main = "Histogram of total steps per day")
 ```
 
 ![](PA1_template_files/figure-html/unnamed-chunk-2-1.png)<!-- -->
@@ -125,7 +125,7 @@ stepsPerInterval[maxIndex,]$interval
 
 
 ## Imputing missing values
-The initial dataset contains NA values. Let's calculate the amount
+The initial dataset contains NA values. Let's calculate the amount of NA values
 
 ```r
 naIndex <- is.na(activity$steps)
@@ -136,7 +136,7 @@ sum(naIndex)
 ## [1] 2304
 ```
 
-For imputing the missing values a simple strategy is choosen. The strategy is to take the average step value of that interval (averaged over all days)
+For imputing the missing values a simple strategy is choosen. The strategy is to take the average step value of that interval (averaged over all days) if the value is missing.
 
 
 ```r
@@ -181,7 +181,7 @@ By imputing values the both median and mean values change compared to the initia
 
 ## Are there differences in activity patterns between weekdays and weekends?
 
-First a weekend/weekday label is assigned to the imputed dataset. Then the average of the steps per interval is calculated.
+First a weekend/weekday label is assigned to the imputed dataset. Then the average of the steps per interval and weekday is calculated.
 
 
 ```r
@@ -195,11 +195,13 @@ stepsPerIntervalWithWeekday <- imputedActivities %>%
                summarize(meanstep = mean(steps))
 ```
 
-
+Finally the steps as function of the interval is plotted as for both weekdays and weekend
 
 ```r
 library(lattice)
-xyplot(meanstep ~ interval | factor(weekday), data=stepsPerIntervalWithWeekday, type="l", layout=c(1,2), xlab = "Number of steps")
+xyplot(meanstep ~ interval | factor(weekday), 
+       data=stepsPerIntervalWithWeekday, type="l", layout=c(1,2), xlab = "Number of steps", 
+       ylab="Steps" )
 ```
 
 ![](PA1_template_files/figure-html/unnamed-chunk-8-1.png)<!-- -->
